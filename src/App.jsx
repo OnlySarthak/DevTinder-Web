@@ -1,5 +1,6 @@
 import { BrowserRouter,Route, Routes } from 'react-router-dom';
 import Body from './body';
+import Login from "./Login";
 
 function App() {
 
@@ -7,7 +8,9 @@ function App() {
       <div>
         <BrowserRouter basename='/'>
           <Routes>
-            <Route path='/' element={<Body/>}/> 
+            <Route path='/' element={<Body/>}>
+              <Route path='/login' element={<Login/>}/>
+            </Route> 
           </Routes>
         </BrowserRouter>
       </div>
