@@ -1,3 +1,3 @@
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "http://localhost:7777";
 
 export {BASE_URL};

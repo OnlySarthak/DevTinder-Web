@@ -28,7 +28,7 @@ const Login = () => {
         return navigate('/feed');
 
         } catch (error) {
-            console.error();
+            console.error(error);
         }
     }
 
