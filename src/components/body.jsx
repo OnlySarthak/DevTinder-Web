@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-import NavBar from './navbar';
+import NavBar from './Navbar';
 import axios from 'axios';
 import { addUser } from '../utils/userSlice';
 import { BASE_URL } from '../utils/constants';
@@ -14,6 +14,7 @@ const body = () => {
 
   const fetchUser = async()=>{
     if(user)return;
+    if (location.pathname === '/login') return;
     try {
     const res = await axios.post(
             BASE_URL + '/profile/view',

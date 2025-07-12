@@ -4,7 +4,7 @@ import Login from "./components/Login";
 import { Provider } from 'react-redux';
 import appStore from './utils/appStore';
 import Feed from './components/feed';
-import Profile from './components/profile';
+import Profile from './components/Profile';
 
 function App() {
 

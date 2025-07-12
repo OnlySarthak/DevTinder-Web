@@ -8,12 +8,11 @@ import {BASE_URL} from '../utils/constants';
 const Login = () => {
     const [emailId, setEmailId] = useState('brian@gmail.com');
     const [password, setPassword] = useState('brian');
+    const [screenError, setError] = useState('');
     const dispach =useDispatch();
     const navigate = useNavigate();
 
     const handleLogin = async ()=> {
-        console.log('hi');
-        
         try {
             const res = await axios.post(BASE_URL + '/login',
                 {
@@ -24,20 +23,23 @@ const Login = () => {
                 }
             );
 
-        dispach(addUser(res.data));
-        return navigate('/feed');
+            console.log('Logged in successfully');  
+            
+            dispach(addUser(res.data));
+            return navigate('/feed');
 
         } catch (error) {
-            console.error(error);
+            setError(error?.response?.data);
         }
+
     }
 
   return (
-    <div className='flex justify-center my-10'>
+    <div className='flex justify-center items-center my-10'>
         <div className="card card-border bg-base-300 w-96 shadow-2xl">
-            <div className="card-body">
+            <div className="card-body" >
                 <h2 className="card-title">Login</h2>
-                <div>
+                <div className="flex flex-col gap-4 mt-10">
                     <label className="input validator">
                         <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <g
@@ -58,7 +60,9 @@ const Login = () => {
                         required />
 
                     </label>
-                        <div className="validator-hint hidden">Enter valid email address</div>
+                    <div className="validator-hint hidden">
+                        Enter valid email address
+                    </div>
                     <label className="input validator">
                     <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <g
@@ -84,13 +88,16 @@ const Login = () => {
                         // title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
                     />
                     </label>
-                        <p className="validator-hint hidden">
-                        ..
-                        </p>
+                    {screenError && (
+                    <p className="text-red-500 text-sm">
+                        {screenError}
+                    </p>
+                    )}
                 </div>
-                <button className="btn btn-primary"
+                <button className="btn btn-primary mb-20 mt-10"
                 onClick={handleLogin}>
-                    Login</button>
+                    Login
+                </button>
                 </div>
             </div>
         </div>
