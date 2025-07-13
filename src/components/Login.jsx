@@ -24,8 +24,12 @@ const Login = () => {
             );
 
             console.log('Logged in successfully');  
+            console.log(res.data.data);
+            
             
             dispach(addUser(res.data));
+
+            
             return navigate('/feed');
 
         } catch (error) {

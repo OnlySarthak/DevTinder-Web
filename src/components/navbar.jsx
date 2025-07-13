@@ -11,6 +11,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [photoUrl, setPhotoUrl] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReFc5RPTXrd_aINy3a9AewvAreBJAtOD4hgg&s");
+  const [firstName, setFirstName] = useState("");
 
   const handleLogout = async() => {
     try {
@@ -25,11 +26,15 @@ const Navbar = () => {
   
 
   useEffect(() => {
-    if (user && user.data) {
+    if (user) {
       // Set actual photo or fallback
       setPhotoUrl(
-        user.data.photourl ||
+        user.photourl ||
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReFc5RPTXrd_aINy3a9AewvAreBJAtOD4hgg&s"
+      );
+
+      setFirstName(
+        user?.firstName  || "Guest"
       );
     }
   }, [user]);
@@ -44,7 +49,7 @@ const Navbar = () => {
           <div className="flex gap-2">
             { user && 
               <div className="dropdown dropdown-end mx-5 flex gap-6">
-                <div className="my-1">Welcome {user?.data?.firstName} </div>
+                <div className="my-1">Welcome {firstName} </div>
                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                     <div className="w-10 rounded-full">
                       <img
