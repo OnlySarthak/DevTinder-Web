@@ -4,7 +4,8 @@ import Login from "./components/Login";
 import { Provider } from 'react-redux';
 import appStore from './utils/appStore';
 import Feed from './components/feed';
-import Profile from './components/Profile';
+import EditProfile from './components/EditProfile';
+import { ToastContainer, toast } from 'react-toastify';
 
 function App() {
 
@@ -16,11 +17,12 @@ function App() {
               <Route path='/' element={<Body/>}>
                 <Route path='/feed' element={<Feed/>}/>
                 <Route path='/login' element={<Login/>}/>
-                <Route path='/profile' element={<Profile/>}/>
+                <Route path='/editProfile' element={<EditProfile/>}/>
               </Route> 
             </Routes>
           </BrowserRouter>
         </Provider>
+        <ToastContainer  position="top-center" autoClose={1500} theme='dark'/>
       </div>
   )
 }
