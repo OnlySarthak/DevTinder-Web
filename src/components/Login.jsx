@@ -9,7 +9,7 @@ const Login = () => {
     const [emailId, setEmailId] = useState('brian@gmail.com');
     const [password, setPassword] = useState('brian');
     const [screenError, setError] = useState('');
-    const dispach =useDispatch();
+    const dispatch =useDispatch();
     const navigate = useNavigate();
 
     const handleLogin = async ()=> {
@@ -26,10 +26,7 @@ const Login = () => {
             console.log('Logged in successfully');  
             console.log(res.data.data);
             
-            
-            dispach(addUser(res.data));
-
-            
+            dispatch(addUser(res.data.data));
             return navigate('/feed');
 
         } catch (error) {

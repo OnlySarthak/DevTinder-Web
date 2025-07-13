@@ -7,7 +7,7 @@ const dummyUser = {
   bio: 'Loves sunsets, dogs and building robots 🤖',
 };
 
-const feed = () => {
+const Feed = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
@@ -16,4 +16,4 @@ const feed = () => {
   )
 }
 
-export default feed
+export default Feed

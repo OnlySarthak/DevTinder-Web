@@ -1,11 +1,12 @@
 import { BrowserRouter,Route, Routes } from 'react-router-dom';
-import Body from './components/body';
+import Body from './components/Body';
 import Login from "./components/Login";
 import { Provider } from 'react-redux';
 import appStore from './utils/appStore';
-import Feed from './components/feed';
+import Feed from './components/Feed';
 import EditProfile from './components/EditProfile';
 import { ToastContainer, toast } from 'react-toastify';
+import Register from './components/Register';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
                 <Route path='/feed' element={<Feed/>}/>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/editProfile' element={<EditProfile/>}/>
+                <Route path='/register' element={<Register/>}/>
               </Route> 
             </Routes>
           </BrowserRouter>

@@ -7,7 +7,7 @@ import { addUser } from '../utils/userSlice';
 import { BASE_URL } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
 
-const body = () => {
+const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
@@ -42,14 +42,14 @@ const body = () => {
   useEffect(() => {
   if (user || location.pathname === '/login') return;
 
-  console.log("test body");
-  console.log(user)
   const fetchUser = async () => {
     try {
       const res = await axios.post(BASE_URL + '/profile/view', {}, {
         withCredentials: true
       });
       dispatch(addUser(res.data.data));
+      console.log("hi");
+      
     } catch (error) {
       if (error?.response?.status === 401) {
         navigate('/login');
@@ -60,7 +60,7 @@ const body = () => {
 
   fetchUser();
   
-}, []);
+}, [user]);
 
   return (
     <div className='h-screen flex flex-col'>
@@ -71,4 +71,4 @@ const body = () => {
   )
 }
 
-export default body
+export default Body
