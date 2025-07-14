@@ -8,6 +8,7 @@ import EditProfile from './components/EditProfile';
 import { ToastContainer, toast } from 'react-toastify';
 import Register from './components/Register';
 import Connections from './components/Connections';
+import Requests from './components/Requests';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
                 <Route path='/editProfile' element={<EditProfile/>}/>
                 <Route path='/register' element={<Register/>}/>
                 <Route path='/connections' element={<Connections/>}/>
+                <Route path='/requests' element={<Requests/>}/>
               </Route> 
             </Routes>
           </BrowserRouter>
