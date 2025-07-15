@@ -42,10 +42,20 @@ const Navbar = () => {
     <div className="navbar bg-base-300 shadow-sm sticky top-0 z-50 ">
       <div className="flex-1">
         <Link to="/feed" className="btn btn-ghost text-xl">
-          🐦‍🔥 DevTinder
+          🐦‍🔥 DevTinder ;
         </Link>
       </div>
       <div className="flex gap-2">
+        {user &&
+          <div className="gap-4 flex">
+            <Link to="/requests">
+              <button className="btn btn-outline btn-success">Requests</button>
+            </Link>
+            <Link to="/connections">
+              <button className="btn btn-outline btn-warning">Connections</button>
+            </Link>
+          </div>
+        }
         {user &&
           <div className="dropdown dropdown-end mx-5 flex gap-6">
             <div className="my-1">Welcome {firstName} </div>
@@ -65,10 +75,7 @@ const Navbar = () => {
                   <span className="badge">New</span>
                 </Link>
               </li>
-              <li> <Link to="/register">Register</Link></li>
-              <li> <Link to="/connections">Connections</Link></li>
-              <li> <Link to="/requests">Requests</Link></li>
-              <li onClick={handleLogout}><a>Logout</a></li>
+              <li onClick={handleLogout}><a className="text-red-600">Logout</a></li>
             </ul>
           </div>
         }

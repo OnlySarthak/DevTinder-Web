@@ -36,7 +36,7 @@ const TinderCard = ({ user }) => {
 
 
   return (
-    <div className="card w-96">
+    <div className="card w-96  rounded-2xl">
       <figure className="relative">
         <img
           src={user.photourl || "https://placehold.co/400x400?text=Profile"}

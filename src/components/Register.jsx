@@ -64,7 +64,7 @@ const Register = () => {
             console.log(res.data.data);
             toast.success('Profile updated successfully');
           
-            return navigate('/login');
+            return navigate('/feed');
         } catch (error) {
             console.error('Error registration profile:', error);
         }
