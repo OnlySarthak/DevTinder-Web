@@ -1,5 +1,6 @@
 import { BrowserRouter,Route, Routes } from 'react-router-dom';
 import Body from './components/Body';
+import Chat from './components/Chat';
 import Login from "./components/Login";
 import { Provider } from 'react-redux';
 import appStore from './utils/appStore';
@@ -24,6 +25,7 @@ function App() {
                 <Route path='/register' element={<Register/>}/>
                 <Route path='/connections' element={<Connections/>}/>
                 <Route path='/requests' element={<Requests/>}/>
+                <Route path='/chat/:targetUserId' element={<Chat/>}/>
               </Route> 
             </Routes>
           </BrowserRouter>

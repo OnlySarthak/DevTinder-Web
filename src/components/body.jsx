@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet} from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import NavBar from './Navbar';
 import axios from 'axios';
 import { addUser } from '../utils/userSlice';
 import { BASE_URL } from '../utils/constants';
-import { useNavigate } from 'react-router-dom';
 
 const Body = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
@@ -21,7 +21,6 @@ const Body = () => {
           withCredentials: true
         });
         dispatch(addUser(res.data.data));
-        console.log("hi");
 
       } catch (error) {
         if (error?.response?.status === 401) {
