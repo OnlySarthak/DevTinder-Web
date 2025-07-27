@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { createSocketConnection } from '../utils/socket';
 import { Socket } from 'socket.io-client';
+import axios from 'axios';
+import { BASE_URL } from '../utils/constants';
 
 const Chat = () => {
-    const connections = useSelector((store) => store.connections);
     const user = useSelector((store) => store.user);
     const [userName, setUserName] = useState('');
     const [userPhotoUrl, setUserPhotoUrl] = useState('');
@@ -24,14 +25,12 @@ const Chat = () => {
         "chat-bubble-error"
     ];
 
-    const getColorForUser = (userId) => {
-        const index = userId.charCodeAt(0) % colors.length;
+    const getColorForUser = (text) => {
+        const index = text.charCodeAt(0) % colors.length;
         return colors[index];
     };
 
     useEffect(() => {
-        
-        
         if (!userId || !targetUserId) return;
 
         const Socket = createSocketConnection();
@@ -42,7 +41,7 @@ const Chat = () => {
 
         Socket.on("messageReceived", (data) => {
             setMessages((messages) => [...messages, {
-                data, color: getColorForUser(data.senderId)
+                data, color: getColorForUser(data.text)
             }]);
         })
 
@@ -52,12 +51,27 @@ const Chat = () => {
     }, [userId, targetUserId]);
 
 
-    const fetchCurrentUserData = async () => {
-        try {           
-            const userData = connections.find(connection => connection.data._id === targetUserId);
+    useEffect(() => {
+        if (!userId || !targetUserId) return;
 
-            setUserName(userData.data.firstName + " " + userData.data.lastName);
-            setUserPhotoUrl(userData.data.photourl);
+        if (!messages.length) fetchCurrentUserData();
+    }, [userId, targetUserId]);
+
+    const fetchCurrentUserData = async () => {
+        try {
+            const Data = await axios.get(BASE_URL + '/chat/' + targetUserId, {
+                withCredentials: true
+            });
+
+            const newMessages = Data.data.data.map((element) => ({
+                data: element,
+                color: getColorForUser(element.text),
+            }));
+
+            setMessages((prev) => [...prev, ...newMessages]);
+
+            setUserName(Data.data.targetUserData.firstName + " " + Data.data.targetUserData.lastName);
+            setUserPhotoUrl(Data.data.targetUserData.photourl);
 
         } catch (error) {
             console.error(error);
@@ -75,10 +89,9 @@ const Chat = () => {
     }
 
     useEffect(() => {
-        if (connections.length) {
-            fetchCurrentUserData();
-        }
-    }, [targetUserId, connections]);
+        console.log("Messages updated:", messages);
+    }, [messages]);
+
 
     return (
         <div className="items-center my-10 flex">
@@ -100,9 +113,9 @@ const Chat = () => {
                         style={{ backgroundImage: `url(${"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb_9Hh9lA99ULreznlxJE1MWmjwg_qZgTzBg&s"})` }}>
 
                         {messages &&
-                            messages.map((message,index) => {
+                            messages.map((message, index) => {
                                 const tempClass = message.data.senderId === userId ? "chat-end" : "chat-start";
-                                                                
+
                                 return (
                                     <div key={index} className={`chat ${tempClass}`}>
                                         <div className={`chat-bubble ${message.color}`}>
@@ -110,7 +123,8 @@ const Chat = () => {
                                         </div>
                                     </div>
                                 );
-                        })}
+                            })
+                        }
                     </div>
                     <div className="flex gap-2 mt-1">
                         <input
@@ -119,6 +133,11 @@ const Chat = () => {
                             className="input input-accent w-full rounded-xl"
                             onChange={(e) => setNewMessage(e.target.value)}
                             value={newMessage}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    handleSend(); // ✅ call your send function
+                                }
+                            }}
                         />
                         <button
                             onClick={handleSend}

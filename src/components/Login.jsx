@@ -6,8 +6,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../utils/constants';
 
 const Login = () => {
-    const [emailId, setEmailId] = useState('brian@gmail.com');
-    const [password, setPassword] = useState('brian');
+    const [emailId, setEmailId] = useState('');
+    const [password, setPassword] = useState('');
     const [screenError, setError] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -58,6 +58,11 @@ const Login = () => {
                                 placeholder="Email Id"
                                 value={emailId}
                                 onChange={(e) => setEmailId(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        handleLogin(); // ✅ call your send function
+                                    }
+                                }}
                                 required />
 
                         </label>
@@ -85,6 +90,11 @@ const Login = () => {
                                 placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        handleLogin(); // ✅ call your send function
+                                    }
+                                }}
                             // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                             // title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
                             />
